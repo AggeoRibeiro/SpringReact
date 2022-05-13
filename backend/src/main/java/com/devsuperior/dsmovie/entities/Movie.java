@@ -2,7 +2,9 @@ package com.devsuperior.dsmovie.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_movie")
@@ -17,6 +19,9 @@ public class Movie implements Serializable {
     private Double score;
     private Integer count;
     private String image;
+
+    @OneToMany(mappedBy = "id.movie")
+    private Set<Score> scores = new HashSet<>();
 
     public Movie() {
     }
@@ -69,16 +74,7 @@ public class Movie implements Serializable {
         this.image = image;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Movie)) return false;
-        Movie movie = (Movie) o;
-        return getId().equals(movie.getId());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId());
+    public Set<Score> getScores() {
+        return scores;
     }
 }
